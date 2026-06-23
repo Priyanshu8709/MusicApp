@@ -15,6 +15,9 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 async function initDb(){
     try {
         await sql`
@@ -41,7 +44,7 @@ async function initDb(){
     }
 }
 
-app.use("api/v1/",adminRoutes);
+app.use("/api/v1",adminRoutes);
 
 const port = process.env.PORT;
 

@@ -27,12 +27,12 @@ export const isAuth = async (req:AuthenticatedRequest,res:Response,next:NextFunc
             res.status(401).json({ message: 'No token found' });
             return;
         }
-        const {data} = await axios.get(`${process.env.USER_URL}/api/v1/user/me`,{
+        const {data} = await axios.get(`${process.env.USER_URL}/api/v1/profile`,{
             headers:{
                 token,
             },
         });
-        req.user=data;
+        req.user = data.user;
         next();
 
     } catch (error) {
