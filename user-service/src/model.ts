@@ -6,6 +6,13 @@ export interface IUser extends Document {
     name: string;
     role: 'user' | 'admin';
     playlists: String[];
+    bio: string;
+    location: string;
+    username: string;
+    recentlyPlayed: String[];
+    savedAlbums: String[];
+    dateJoined: Date;
+    continuedListening: String[];
 }
 const UserSchema: Schema<IUser> = new Schema({
     email: { 
@@ -26,10 +33,42 @@ const UserSchema: Schema<IUser> = new Schema({
         enum: ['user', 'admin'], 
         default: 'user' 
     },
-    playlists: [{ 
-        type: String, 
-        required: true
-    }],
+    playlists: {
+        type: [String],
+        default: []
+    },
+    bio:{
+        type:String,
+        required:false,
+        trim:true,
+    },
+    location:{
+        type:String,
+        required:false,
+        trim:true,
+    },
+    username:{
+        type:String,
+        unique:true,
+        required:false,
+        trim:true,
+    },   
+    recentlyPlayed: {
+        type: [String],
+        default: []
+    },
+    savedAlbums: {
+        type: [String],
+        default: []
+    },
+    dateJoined: {
+        type: Date,
+        default: Date.now
+    },
+    continuedListening: {
+        type: [String],
+        default: []
+    },
 },
 { timestamps: true });   
 const User = mongoose.model<IUser>('User', UserSchema);
